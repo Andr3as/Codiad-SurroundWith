@@ -1,0 +1,54 @@
+{ 
+    "python" : {
+        "if" : {
+            "pre" : "if :",
+            "post": ""
+        },
+        "ifelse" : {
+            "pre" : "if :",
+            "post": "else:"
+        },
+        "for" : {
+            "pre" : "for :",
+            "post": ""
+        },
+        "try" : {
+            "pre" : "try:",
+            "post": "except :"
+        },
+        "while" : {
+            "pre" : "while :",
+            "post": ""
+        }
+    },
+    "default" : {
+        "div" : {
+            "pre" : "<div id=\"\" >",
+            "post": "</div>"
+        },
+        "dowhile" : {
+            "pre" : "do {",
+            "post": "} while ();"
+        },
+        "if" : {
+            "pre" : "if () {",
+            "post": "}"
+        },
+        "ifelse" : {
+            "pre" : "if () {",
+            "post": "} else {}"
+        },
+        "for" : {
+            "pre" : "for () {",
+            "post": "}"
+        },
+        "try" : {
+            "pre" : "try {",
+            "post": "} catch () {}"
+        },
+        "while" : {
+            "pre" : "while () {",
+            "post": "}"
+        }
+    }
+}

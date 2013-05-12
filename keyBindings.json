@@ -1,0 +1,51 @@
+[
+    {
+        "string" : "a div", 
+        "bindKey": {
+            "win": "Ctrl-Alt-D",
+            "mac": "Command-Alt-D"
+        }
+    },
+    {
+        "string" : "a do-while loop",
+        "bindKey": {
+            "win": "Ctrl-Alt-U",
+            "mac": "Command-Alt-U"
+        }
+    },
+    {
+        "string" : "an if clause", 
+        "bindKey": {
+            "win": "Ctrl-Alt-I",
+            "mac": "Command-Alt-I"
+        }
+    },
+    {
+        "string" : "an if-else clause", 
+        "bindKey": {
+            "win": "Ctrl-Alt-E",
+            "mac": "Command-Alt-E"
+        }
+    },
+    {
+        "string" : "a for loop", 
+        "bindKey": {
+            "win": "Ctrl-Alt-F",
+            "mac": "Command-Alt-F"
+        }
+    },
+    {
+        "string" : "a try-catch block", 
+        "bindKey": {
+            "win": "Ctrl-Alt-T",
+            "mac": "Command-Alt-T"
+        }
+    },
+    {
+        "string" : "a while loop", 
+        "bindKey": {
+            "win": "Ctrl-Alt-W",
+            "mac": "Command-Alt-W"
+        }
+    }
+]
