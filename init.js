@@ -66,10 +66,6 @@
             this.addStuff("try");
         },
         
-        addTryFinally: function() {
-            this.addStuff("try-finally");
-        },
-        
         addWhile: function() {
             this.addStuff("while");
         },
