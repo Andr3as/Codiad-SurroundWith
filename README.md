@@ -21,4 +21,4 @@ This is plugin for the cloud IDE Codiad. It adds a 'surround with' function to C
 
 ###More Information
 
-[andr3as.bplaced.net](http://www.andr3as.bplaced.net "More Information")
+[http://www.andr3as.bplaced.net/SurroundWith](http://www.andr3as.bplaced.net/SurroundWith "More Information")
