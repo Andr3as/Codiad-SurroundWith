@@ -1,3 +1,9 @@
+/*
+* Copyright (c) Codiad & Andr3as, distributed
+* as-is and without warranty under the MIT License. 
+* See [root]/license.md for more information. This information must remain intact.
+*/
+
 (function(global, $){
 
     var codiad = global.codiad,
@@ -60,6 +66,10 @@
             this.addStuff("try");
         },
         
+        addTryFinally: function() {
+            this.addStuff("try-finally");
+        },
+        
         addWhile: function() {
             this.addStuff("while");
         },
@@ -91,12 +101,6 @@
         addStuff: function(type) {
             var selText = codiad.editor.getSelectedText();
             var selStart= codiad.editor.getActive().getSelectionRange().start;
-            // no selection
-            // ?ToDo - rewrite - allow it without selected Text
-            if (selText === "") {
-                codiad.message.error("Nothing selected!");
-                return false;
-            }
             // multi selection
             // ?Todo - rewrite - allow multiselection
             if (codiad.editor.getActive().inMultiSelectMode) {
@@ -115,6 +119,13 @@
                 // syntax not defined, select default
                 parts = this.keyArray["default"];
             }
+            
+            // catch wrong key word
+            if (typeof(parts[type]) === "undefined") {
+                codiad.message.error("Requested type is not supported!");
+                return false;
+            }
+            
             var pre     = parts[type].pre;
             var post    = parts[type].post;
             
@@ -137,7 +148,12 @@
                 inText = inText.replace(new RegExp("\n", "g"), "\n\t");
                 inText += "\n" + tab + post;
             }
-            // Workaround to fix mixed tabs and spaces 
+            //create space
+            var space = "";
+            for (var i = 0; i < this.tabWidth; i++) {
+                space += " ";
+            }
+            // Workaround to fix mixed tabs and spaces
             //and to replace "\t" with spaces if necessary
             if (this.indentType == "tab") {
                 inText  = inText.replace(new RegExp(space, "g"), "\t");

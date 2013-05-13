@@ -10,13 +10,13 @@ This is plugin for the cloud IDE Codiad. It adds a 'surround with' function to C
 
 ##Default Hotkeys
 
-*Ctrl-Alt-D  - div
-*Ctrl-Alt-U  - do-while loop
-*Ctrl-Alt-I  - if clause
-*Ctrl-Alt-E  - if-else clause
-*Ctrl-Alt-F  - for loop
-*Ctrl-Alt-T  - try-catch block
-*Ctrl-Alt-W  - while loop
+*Ctrl-Alt-D  - div  
+*Ctrl-Alt-U  - do-while loop  
+*Ctrl-Alt-I  - if clause  
+*Ctrl-Alt-E  - if-else clause  
+*Ctrl-Alt-F  - for loop  
+*Ctrl-Alt-T  - try-catch block  
+*Ctrl-Alt-W  - while loop  
 
 
 ###More Information
