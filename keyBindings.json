@@ -1,6 +1,7 @@
 [
     {
-        "string" : "a div", 
+        "string" : "a div",
+        "name": "addDiv",
         "bindKey": {
             "win": "Ctrl-Alt-D",
             "mac": "Command-Alt-D"
@@ -8,6 +9,7 @@
     },
     {
         "string" : "a do-while loop",
+        "name": "addDoWhile",
         "bindKey": {
             "win": "Ctrl-Alt-U",
             "mac": "Command-Alt-U"
@@ -15,6 +17,7 @@
     },
     {
         "string" : "an if clause", 
+        "name": "addIf",
         "bindKey": {
             "win": "Ctrl-Alt-I",
             "mac": "Command-Alt-I"
@@ -22,6 +25,7 @@
     },
     {
         "string" : "an if-else clause", 
+        "name": "addIfElse",
         "bindKey": {
             "win": "Ctrl-Alt-E",
             "mac": "Command-Alt-E"
@@ -29,6 +33,7 @@
     },
     {
         "string" : "a for loop", 
+        "name": "addFor",
         "bindKey": {
             "win": "Ctrl-Alt-F",
             "mac": "Command-Alt-F"
@@ -36,6 +41,7 @@
     },
     {
         "string" : "a try-catch block", 
+        "name": "addTry",
         "bindKey": {
             "win": "Ctrl-Alt-T",
             "mac": "Command-Alt-T"
@@ -43,6 +49,7 @@
     },
     {
         "string" : "a while loop", 
+        "name": "addWhile",
         "bindKey": {
             "win": "Ctrl-Alt-W",
             "mac": "Command-Alt-W"

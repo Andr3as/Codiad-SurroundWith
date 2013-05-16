@@ -18,16 +18,17 @@
     codiad.SurroundWith = {
     
         bindKeys : null,
+        tagArray : null,
         keyArray : null,
         path     : curpath,
-        indent   : "\t",
+        //Settings:
         indentType: "tab",
         tabWidth : 4,
     
         init: function() {
             $.getJSON(this.path+"keywords.json",
                 function(data) {
-                    codiad.SurroundWith.keyArray = data;
+                    codiad.SurroundWith.tagArray = data;
                 });
             this.bindKeys   = window.setInterval(function(){codiad.SurroundWith.setKeyBindings()},1000);
         },
@@ -40,6 +41,12 @@
                 os = "mac";
             }
             codiad.modal.load(600,this.path+'dialog.php?os='+os);
+        },
+        
+        showSettings: function() {
+            var iType   = codiad.SurroundWith.indentType;
+            var tabW    = codiad.SurroundWith.tabWidth;
+            codiad.modal.load(300,this.path+'dialog.php?type=settings&indentType='+iType+'&tabWidth='+tabW);
         },
         
         addDiv: function() {
@@ -79,9 +86,42 @@
             //codiad.editor.getActive().commands.addCommand(
             //    {name: 'Andi', bindKey: { win: 'Ctrl-Alt-T', mac: 'Command-T'},exec: function(e) {codiad.message.notice("Andi");}})
             if (codiad.editor.getActive() !== null) {
-                $.getScript(this.path+"keyBindings.js");
                 //clear Interval
-                window.clearInterval(this.bindKey);
+                window.clearInterval(this.bindKeys);
+                $.getJSON(this.path+"keyBindings.json",
+                    function(data) {
+                        codiad.SurroundWith.keyArray = data;
+                        codiad.SurroundWith.setKey("addDiv", function(e) {codiad.SurroundWith.addDiv();});
+                        codiad.SurroundWith.setKey("addDoWhile", function(e) {codiad.SurroundWith.addDoWhile();});
+                        codiad.SurroundWith.setKey("addIf", function(e) {codiad.SurroundWith.addIf();});
+                        codiad.SurroundWith.setKey("addIfElse", function(e) {codiad.SurroundWith.addIfElse();});
+                        codiad.SurroundWith.setKey("addFor", function(e) {codiad.SurroundWith.addFor();});
+                        codiad.SurroundWith.setKey("addTry", function(e) {codiad.SurroundWith.addTry();});
+                        codiad.SurroundWith.setKey("addWhile", function(e) {codiad.SurroundWith.addWhile();});
+                    });
+            }
+        },
+
+        //////////////////////////////////////////////////////////
+        //
+        //  Set a command
+        //
+        //  Parameters:
+        //
+        //  keyName - {String} (name of the command - 
+        //                          identical with name in keyBindings.json)
+        //  execFunction - {Function} (function of the command)
+        //
+        //////////////////////////////////////////////////////////
+
+        setKey: function(keyName, execFunction) {
+            var ed = codiad.editor.getActive().commands;
+            for (var i = 0; i < this.keyArray.length; i++) {
+                if (this.keyArray[i].name == keyName) {
+                    this.keyArray[i].exec = execFunction;
+                    ed.addCommand(this.keyArray[i]);
+                    return true;
+                }
             }
         },
         
@@ -106,14 +146,14 @@
             
             var syntax  = $('#current-mode').text();
             var parts   = null;
-            for (var key in this.keyArray) {
-                if (key === syntax) {
-                    parts = this.keyArray[key];
+            for (var tag in this.tagArray) {
+                if (tag === syntax) {
+                    parts = this.tagArray[tag];
                 }
             }
             if (parts === null) {
                 // syntax not defined, select default
-                parts = this.keyArray["default"];
+                parts = this.tagArray["default"];
             }
             
             // catch wrong key word
@@ -165,7 +205,7 @@
         //getStartTabs
         insertStartTab: function(col) {
             var str = "";
-            if (this.indentType == "tabs") {
+            if (this.indentType == "tab") {
                 var rest = col % this.tabWidth;
                 var nTab = (col - rest) / this.tabWidth;
                 for (var j = 0; j < nTab; j++) {
@@ -179,7 +219,6 @@
                     str += " ";
                 }
             }
-            console.log(str);
             return str;
         }
     };

@@ -1,13 +1,18 @@
 [{
     "author": "Andr3as",
-    "version": "0.4",
+    "version": "0.5",
     "name": "SurroundWith",
     "url": "http://www.andr3as.bplaced.net/SurroundWith",
     "rightbar": [
         {
             "action": "codiad.SurroundWith.showInfo();",
             "icon": "icon-info-circled",
-            "title": "Surround With ..."
+            "title": "SurroundWith Info"
+        },
+        {
+            "action": "codiad.SurroundWith.showSettings();",
+            "icon": "icon-cog",
+            "title": "Settings"
         }
     ]    
 }]
