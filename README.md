@@ -1,11 +1,16 @@
 #SurroundWith
 
-This is plugin for the cloud IDE Codiad. It adds a 'surround with' function to Codiad like Eclipse has.
+This is a plugin for the cloud IDE Codiad. It adds a 'surround with' function to Codiad like Eclipse has.
 
 #Installation
 
 - Download the zip file and unzip it to your plugin folder.
 - Enable this plugin in the plugin manager.
+
+#Basic Use
+
+- Select the text which should be surrounded
+- Run the command (see below)
 
 
 ##Default Hotkeys
