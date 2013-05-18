@@ -17,7 +17,7 @@
             $infoStr    = file_get_contents("plugin.json");
             $info       = json_decode($infoStr, true);
             printLine("Author:", $info[0]['author']);
-            printLine("Date", '12.05.2013');
+            printLine("Date", '18.05.2013');
             printLine("Version:", $info[0]['version']);
             echo '
                 <tr>
@@ -57,7 +57,8 @@
                 printLine($array[$i]["string"], $array[$i]["bindKey"][$os]);
             }
             echo '</table>
-                <button onclick="codiad.modal.unload();return false;">Close</button>';
+                <button onclick="codiad.modal.unload();return false;">Close</button>
+                <button onclick="codiad.SurroundWith.showSettings(); return false">Settings</button>';
         } else if ($type == "settings") {
             if (isset($_GET['indentType'])) {
                 $indentType = $_GET['indentType'];

@@ -1,18 +1,13 @@
 [{
     "author": "Andr3as",
-    "version": "0.5",
+    "version": "0.51",
     "name": "SurroundWith",
     "url": "https://github.com/Andr3as/Codiad-SurroundWith.git",
     "rightbar": [
         {
             "action": "codiad.SurroundWith.showInfo();",
             "icon": "icon-info-circled",
-            "title": "SurroundWith Info"
-        },
-        {
-            "action": "codiad.SurroundWith.showSettings();",
-            "icon": "icon-cog",
-            "title": "Settings"
+            "title": "SurroundWith"
         }
     ]    
 }]
