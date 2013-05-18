@@ -26,11 +26,12 @@
         tabWidth : 4,
     
         init: function() {
-            $.getJSON(this.path+"keywords.json",
+            var _this = this;
+            $.getJSON(_this.path+"keywords.json",
                 function(data) {
-                    codiad.SurroundWith.tagArray = data;
+                    _this.tagArray = data;
                 });
-            this.bindKeys   = window.setInterval(function(){codiad.SurroundWith.setKeyBindings()},1000);
+            _this.bindKeys   = window.setInterval(function(){_this.setKeyBindings()},1000);
         },
 
         showInfo: function() {
@@ -44,8 +45,9 @@
         },
         
         showSettings: function() {
-            var iType   = codiad.SurroundWith.indentType;
-            var tabW    = codiad.SurroundWith.tabWidth;
+            var _this   = this;
+            var iType   = _this.indentType;
+            var tabW    = _this.tabWidth;
             codiad.modal.load(300,this.path+'dialog.php?type=settings&indentType='+iType+'&tabWidth='+tabW);
         },
         
@@ -85,19 +87,20 @@
         setKeyBindings: function() {
             //codiad.editor.getActive().commands.addCommand(
             //    {name: 'Andi', bindKey: { win: 'Ctrl-Alt-T', mac: 'Command-T'},exec: function(e) {codiad.message.notice("Andi");}})
+            var _this = this;
             if (codiad.editor.getActive() !== null) {
                 //clear Interval
-                window.clearInterval(this.bindKeys);
-                $.getJSON(this.path+"keyBindings.json",
+                window.clearInterval(_this.bindKeys);
+                $.getJSON(_this.path+"keyBindings.json",
                     function(data) {
-                        codiad.SurroundWith.keyArray = data;
-                        codiad.SurroundWith.setKey("addDiv", function(e) {codiad.SurroundWith.addDiv();});
-                        codiad.SurroundWith.setKey("addDoWhile", function(e) {codiad.SurroundWith.addDoWhile();});
-                        codiad.SurroundWith.setKey("addIf", function(e) {codiad.SurroundWith.addIf();});
-                        codiad.SurroundWith.setKey("addIfElse", function(e) {codiad.SurroundWith.addIfElse();});
-                        codiad.SurroundWith.setKey("addFor", function(e) {codiad.SurroundWith.addFor();});
-                        codiad.SurroundWith.setKey("addTry", function(e) {codiad.SurroundWith.addTry();});
-                        codiad.SurroundWith.setKey("addWhile", function(e) {codiad.SurroundWith.addWhile();});
+                        _this.keyArray = data;
+                        _this.setKey("addDiv", function(e) {_this.addDiv();});
+                        _this.setKey("addDoWhile", function(e) {_this.addDoWhile();});
+                        _this.setKey("addIf", function(e) {_this.addIf();});
+                        _this.setKey("addIfElse", function(e) {_this.addIfElse();});
+                        _this.setKey("addFor", function(e) {_this.addFor();});
+                        _this.setKey("addTry", function(e) {_this.addTry();});
+                        _this.setKey("addWhile", function(e) {_this.addWhile();});
                     });
             }
         },
@@ -115,11 +118,12 @@
         //////////////////////////////////////////////////////////
 
         setKey: function(keyName, execFunction) {
+            var _this = this;
             var ed = codiad.editor.getActive().commands;
-            for (var i = 0; i < this.keyArray.length; i++) {
-                if (this.keyArray[i].name == keyName) {
-                    this.keyArray[i].exec = execFunction;
-                    ed.addCommand(this.keyArray[i]);
+            for (var i = 0; i < _this.keyArray.length; i++) {
+                if (_this.keyArray[i].name == keyName) {
+                    _this.keyArray[i].exec = execFunction;
+                    ed.addCommand(_this.keyArray[i]);
                     return true;
                 }
             }
@@ -135,6 +139,7 @@
         //
         //////////////////////////////////////////////////////////
         addStuff: function(type) {
+            var _this   = this;
             var selText = codiad.editor.getSelectedText();
             var selStart= codiad.editor.getActive().getSelectionRange().start;
             // multi selection
@@ -146,14 +151,14 @@
             
             var syntax  = $('#current-mode').text();
             var parts   = null;
-            for (var tag in this.tagArray) {
+            for (var tag in _this.tagArray) {
                 if (tag === syntax) {
-                    parts = this.tagArray[tag];
+                    parts = _this.tagArray[tag];
                 }
             }
             if (parts === null) {
                 // syntax not defined, select default
-                parts = this.tagArray["default"];
+                parts = _this.tagArray["default"];
             }
             
             // catch wrong key word
@@ -167,7 +172,7 @@
             
             var inText  = "";
             //Insert tabs
-            var tab     = this.insertStartTab(selStart.column);
+            var tab     = _this.insertStartTab(selStart.column);
             if (selText.search("\r\n") != -1) {
                 //Windows
                 inText = pre + "\r\n" + tab + selText;
@@ -186,12 +191,12 @@
             }
             //create space
             var space = "";
-            for (var i = 0; i < this.tabWidth; i++) {
+            for (var i = 0; i < _this.tabWidth; i++) {
                 space += " ";
             }
             // Workaround to fix mixed tabs and spaces
             //and to replace "\t" with spaces if necessary
-            if (this.indentType == "tab") {
+            if (_this.indentType == "tab") {
                 inText  = inText.replace(new RegExp(space, "g"), "\t");
             } else {
                 inText  = inText.replace(new RegExp("\t", "g"), space);
@@ -204,10 +209,11 @@
         },
         //getStartTabs
         insertStartTab: function(col) {
-            var str = "";
-            if (this.indentType == "tab") {
-                var rest = col % this.tabWidth;
-                var nTab = (col - rest) / this.tabWidth;
+            var _this   = this;
+            var str     = "";
+            if (_this.indentType == "tab") {
+                var rest = col % _this.tabWidth;
+                var nTab = (col - rest) / _this.tabWidth;
                 for (var j = 0; j < nTab; j++) {
                     str += '\t';
                 }

@@ -102,7 +102,7 @@
                         </td>
                     </tr>
                 </table>
-                <button onclick="unloadSettings();">Close</button>
+                <button onclick="unloadSettings(); return false;">Close</button>
                 <script>
                     function unloadSettings() {
                         var indentType  = $("#indentType").val();
