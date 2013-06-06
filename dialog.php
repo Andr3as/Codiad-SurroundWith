@@ -29,7 +29,7 @@
                     <td><a href="http://www.github.com/Andr3as/Codiad-SurroundWith" style="color: white">github.com/Andr3as/Codiad-SurroundWith</a></td>
                 </tr>
                 <tr>
-                    <th colspan="2" style="font-weight: normal">A plugin to add a surround with function to codiad like in Eclipse</th>
+                    <th colspan="2" style="font-weight: normal">A plugin to add a \'surround with\' ability to codiad like in Eclipse</th>
                 </tr>
                 <tr></tr>
                 <tr></tr>

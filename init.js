@@ -32,6 +32,11 @@
                     _this.tagArray = data;
                 });
             _this.bindKeys   = window.setInterval(function(){_this.setKeyBindings()},1000);
+            //Settings listener
+            amplify.subscribe("FileSettings.publish", function(settings) {
+				_this.indentType = settings.indentType;
+				_this.tabWidth	= settings.tabWidth;
+            });
         },
 
         showInfo: function() {

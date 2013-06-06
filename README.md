@@ -1,6 +1,6 @@
 #SurroundWith
 
-This is a plugin for the cloud IDE Codiad. It adds a 'surround with' function to Codiad like Eclipse has.
+This is a plugin for the cloud IDE Codiad. It adds a 'surround with' ability to Codiad like Eclipse has.
 
 #Installation
 
@@ -23,6 +23,15 @@ This is a plugin for the cloud IDE Codiad. It adds a 'surround with' function to
 - Ctrl-Alt-T  - try-catch block  
 - Ctrl-Alt-W  - while loop  
 
+##Example
+
+####Before
+
+![Before](http://www.andr3as.bplaced.net/SurroundWith/img/example1.jpg "Before")
+
+####After
+
+![After](http://www.andr3as.bplaced.net/SurroundWith/img/example2.jpg "After")
 
 ###More Information
 
