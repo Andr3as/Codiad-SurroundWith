@@ -32,11 +32,6 @@
                     _this.tagArray = data;
                 });
             _this.bindKeys   = window.setInterval(function(){_this.setKeyBindings()},1000);
-            //Settings listener
-            amplify.subscribe("FileSettings.publish", function(settings) {
-				_this.indentType = settings.indentType;
-				_this.tabWidth	= settings.tabWidth;
-            });
         },
 
         showInfo: function() {
@@ -47,13 +42,6 @@
                 os = "mac";
             }
             codiad.modal.load(600,this.path+'dialog.php?os='+os);
-        },
-        
-        showSettings: function() {
-            var _this   = this;
-            var iType   = _this.indentType;
-            var tabW    = _this.tabWidth;
-            codiad.modal.load(300,this.path+'dialog.php?type=settings&indentType='+iType+'&tabWidth='+tabW);
         },
         
         addDiv: function() {
@@ -136,6 +124,22 @@
         
         //////////////////////////////////////////////////////////
         //
+        //  Get settings
+        //
+        //////////////////////////////////////////////////////////
+        
+        getSettings: function() {
+			this.tabWidth	= codiad.editor.settings.tabSize;
+			if (codiad.editor.settings.softTabs) {
+				this.indentType     = "space";
+            } else {
+				this.indentType     = "tab";
+			}
+			
+        },
+        
+        //////////////////////////////////////////////////////////
+        //
         //  Surround the selected text
         //
         //  Parameters:
@@ -145,6 +149,7 @@
         //////////////////////////////////////////////////////////
         addStuff: function(type) {
             var _this   = this;
+            this.getSettings();
             var selText = codiad.editor.getSelectedText();
             var selStart= codiad.editor.getActive().getSelectionRange().start;
             // multi selection

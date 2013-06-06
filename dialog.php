@@ -57,67 +57,7 @@
                 printLine($array[$i]["string"], $array[$i]["bindKey"][$os]);
             }
             echo '</table>
-                <button onclick="codiad.modal.unload();return false;">Close</button>
-                <button onclick="codiad.SurroundWith.showSettings(); return false">Settings</button>';
-        } else if ($type == "settings") {
-            if (isset($_GET['indentType'])) {
-                $indentType = $_GET['indentType'];
-            } else {
-                $indentType = "tab";
-            }
-            if (isset($_GET['tabWidth'])) {
-                $tabWidth = $_GET['tabWidth'];
-            } else {
-                $tabWidth = 4;
-            }
-            echo '
-                <label>Settings</label>
-                <p>Note: These settings are only temporary for this session.<br> For permanent settings edit the settings in init.js.</p>
-                <hr>
-                <table class="settings">
-                    <tr>
-                        <td width="1">Indentation:</td>
-                        <td>
-                            <select class="setting" id="indentType" size="1" tabindex="1">';
-                                if ($indentType == "tab") {
-                                    pringSelected("Tabs", "Spaces");
-                                } else {
-                                    pringSelected("Spaces", "Tabs");
-                                }
-                echo '      </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="1">Tab Width:</td>
-                        <td>
-                            <select class="setting" id="tabWidth" size="1" tabindex="2">';
-                                for ($i = 0; $i <= 10;$i++) {
-                                    if ($i == $tabWidth) {
-                                        echo "<option selected>$i</option>";
-                                    } else {
-                                        echo "<option>$i</option>";
-                                    }
-                                }
-            echo '          </select>
-                        </td>
-                    </tr>
-                </table>
-                <button onclick="unloadSettings(); return false;">Close</button>
-                <script>
-                    function unloadSettings() {
-                        var indentType  = $("#indentType").val();
-                        var tabWidth    = $("#tabWidth").val();
-                        if (indentType == "Tabs") {
-                            codiad.SurroundWith.indentType = "tab";
-                        } else {
-                            codiad.SurroundWith.indentType = "space";
-                        }
-                        codiad.SurroundWith.tabWidth = tabWidth;
-                        codiad.modal.unload();
-                        return false;
-                    }
-                </script>
-            ';
+                <button onclick="codiad.modal.unload();return false;">Close</button>';
         }
     ?>
 </form>
@@ -128,12 +68,6 @@
             <tr>
                 <td>$name</td><td>$key</td>
             </tr>
-        ";
-    }
-    function pringSelected($sel, $other) {
-        echo "
-            <option selected>$sel</option>
-            <option>$other</option>
         ";
     }
 ?>
