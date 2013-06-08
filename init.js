@@ -151,7 +151,6 @@
             var _this   = this;
             this.getSettings();
             var selText = codiad.editor.getSelectedText();
-            var selStart= codiad.editor.getActive().getSelectionRange().start;
             // multi selection
             // ?Todo - rewrite - allow multiselection
             if (codiad.editor.getActive().inMultiSelectMode) {
@@ -182,22 +181,15 @@
             
             var inText  = "";
             //Insert tabs
-            var tab     = _this.insertStartTab(selStart.column);
             if (selText.search("\r\n") != -1) {
                 //Windows
-                inText = pre + "\r\n" + tab + selText;
-                inText = inText.replace(new RegExp("\r\n", "g"), "\r\n\t");
-                inText += "\r\n" + tab + post;
+                inText = this.insertLineTab(selText, "\r\n", pre, post);
             } else if (selText.search("\r") != -1) {
                 //Mac
-                inText = pre + "\r" + tab + selText;
-                inText = inText.replace(new RegExp("\r", "g"), "\r\t");
-                inText += "\r" + tab + post;
+                inText = this.insertLineTab(selText, "\r", pre, post);
             } else {
                 //Unix
-                inText = pre + "\n" + tab + selText;
-                inText = inText.replace(new RegExp("\n", "g"), "\n\t");
-                inText += "\n" + tab + post;
+                inText = this.insertLineTab(selText, "\n", pre, post);
             }
             //create space
             var space = "";
@@ -217,23 +209,69 @@
             codiad.message.success(msg+" added");
             return true;
         },
-        //getStartTabs
-        insertStartTab: function(col) {
-            var _this   = this;
-            var str     = "";
-            if (_this.indentType == "tab") {
-                var rest = col % _this.tabWidth;
-                var nTab = (col - rest) / _this.tabWidth;
-                for (var j = 0; j < nTab; j++) {
-                    str += '\t';
-                }
-                for (var k = 0; k < rest; k++) {
-                    str += ' ';
-                }
+        
+        //////////////////////////////////////////////////////////
+        //
+        //  Insert one tab each line
+        //
+        //  Parameters:
+        //
+        //  sel - {String} - Selected text
+        //  type - {String} - Line ending {\n,\r,\r\n}
+        //  pre - {String} - String to add before selection
+        //  post - {String} - String to add after selection
+        //
+        //////////////////////////////////////////////////////////
+        insertLineTab: function(sel, type, pre, post) {
+            var indent = "";
+            var inText = "";
+            if (this.indentType == "tab") {
+                indent  = "\t";
             } else {
-                for (var i = 0; i < col; i++) {
-                    str += " ";
+                for (var i = 0; i < this.tabWidth; i++) {
+                    indent += " ";
                 }
+            }
+            
+            var selStart= codiad.editor.getActive().getSelectionRange().start;
+            var tab = this.getStartTab(selStart);
+            
+            inText = pre + type + tab + sel;
+            inText = inText.replace(new RegExp(type, "g"), type+indent);
+            inText += type + tab + post;
+            return inText;
+        },
+        
+        //////////////////////////////////////////////////////////
+        //
+        //  Get the indentation of the start line
+        //
+        //  Parameters:
+        //
+        //  start - {Object} - Start of the selection
+        //
+        //////////////////////////////////////////////////////////
+        getStartTab: function(start) {
+            var str     = "";
+            var line    = codiad.editor.getActive().getValue().split("\n")[start.row];
+            var seq     = line.substring(0,start.column);
+            var incTab  = 0;
+            var incSpace = 0;
+            for (var i = 0; i < seq.length; i++) {
+                if (seq.charAt(i) == "\t") {
+                    incTab++;
+                } else if (seq.charAt(i) == " ") {
+                    incSpace++;
+                } else {
+                    incSpace++;
+                }
+            }
+            
+            for (var j = 0; j < incTab; j++) {
+                str += '\t';
+            }
+            for (var k = 0; k < incSpace; k++) {
+                str += ' ';
             }
             return str;
         }
