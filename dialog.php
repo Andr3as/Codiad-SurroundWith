@@ -17,12 +17,12 @@
             $infoStr    = file_get_contents("plugin.json");
             $info       = json_decode($infoStr, true);
             printLine("Author:", $info[0]['author']);
-            printLine("Date", '18.05.2013');
+            printLine("Date", '04.07.2013');
             printLine("Version:", $info[0]['version']);
             echo '
                 <tr>
                     <td>Website:</td>
-                    <td><a href="http://www.andr3as.bplaced.net/SurroundWith" style="color: white">andr3as.bplaced.net/SurroundWith</a></td>
+                    <td><a href="http://andrano.de/SurroundWith" style="color: white">andrano.de/SurroundWith</a></td>
                 </tr>
                 <tr>
                     <td>Github:</td>
