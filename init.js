@@ -17,7 +17,6 @@
 
     codiad.SurroundWith = {
     
-        bindKeys : null,
         tagArray : null,
         keyArray : null,
         path     : curpath,
@@ -31,7 +30,7 @@
                 function(data) {
                     _this.tagArray = data;
                 });
-            _this.bindKeys   = window.setInterval(function(){_this.setKeyBindings()},1000);
+            amplify.subscribe("active.onOpen", function(){_this.setKeyBindings()});
         },
 
         showInfo: function() {
@@ -78,12 +77,8 @@
         //
         //////////////////////////////////////////////////////////
         setKeyBindings: function() {
-            //codiad.editor.getActive().commands.addCommand(
-            //    {name: 'Andi', bindKey: { win: 'Ctrl-Alt-T', mac: 'Command-T'},exec: function(e) {codiad.message.notice("Andi");}})
             var _this = this;
             if (codiad.editor.getActive() !== null) {
-                //clear Interval
-                window.clearInterval(_this.bindKeys);
                 $.getJSON(_this.path+"keyBindings.json",
                     function(data) {
                         _this.keyArray = data;
