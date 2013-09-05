@@ -32,16 +32,6 @@
                 });
             amplify.subscribe("active.onOpen", function(){_this.setKeyBindings()});
         },
-
-        showInfo: function() {
-            var os;
-            if (navigator.platform.search("Win") != -1 || navigator.platform.search("Linux") != -1) {
-                os = "win";
-            } else {
-                os = "mac";
-            }
-            codiad.modal.load(600,this.path+'dialog.php?os='+os);
-        },
         
         addDiv: function() {
             this.addStuff("div");
@@ -104,7 +94,6 @@
         //  execFunction - {Function} (function of the command)
         //
         //////////////////////////////////////////////////////////
-
         setKey: function(keyName, execFunction) {
             var _this = this;
             var ed = codiad.editor.getActive().commands;
@@ -122,7 +111,6 @@
         //  Get settings
         //
         //////////////////////////////////////////////////////////
-        
         getSettings: function() {
 			this.tabWidth	= codiad.editor.settings.tabSize;
 			if (codiad.editor.settings.softTabs) {
