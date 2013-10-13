@@ -30,7 +30,11 @@
                 function(data) {
                     _this.tagArray = data;
                 });
-            amplify.subscribe("active.onOpen", function(){_this.setKeyBindings()});
+            $.getJSON(_this.path+"keyBindings.json",
+                function(data) {
+                    _this.keyArray = data;
+                    amplify.subscribe("active.onOpen", function(){_this.setKeyBindings()});
+                });
         },
         
         addDiv: function() {
@@ -69,17 +73,13 @@
         setKeyBindings: function() {
             var _this = this;
             if (codiad.editor.getActive() !== null) {
-                $.getJSON(_this.path+"keyBindings.json",
-                    function(data) {
-                        _this.keyArray = data;
-                        _this.setKey("addDiv", function(e) {_this.addDiv();});
-                        _this.setKey("addDoWhile", function(e) {_this.addDoWhile();});
-                        _this.setKey("addIf", function(e) {_this.addIf();});
-                        _this.setKey("addIfElse", function(e) {_this.addIfElse();});
-                        _this.setKey("addFor", function(e) {_this.addFor();});
-                        _this.setKey("addTry", function(e) {_this.addTry();});
-                        _this.setKey("addWhile", function(e) {_this.addWhile();});
-                    });
+                _this.setKey("addDiv", function(e) {_this.addDiv();});
+                _this.setKey("addDoWhile", function(e) {_this.addDoWhile();});
+                _this.setKey("addIf", function(e) {_this.addIf();});
+                _this.setKey("addIfElse", function(e) {_this.addIfElse();});
+                _this.setKey("addFor", function(e) {_this.addFor();});
+                _this.setKey("addTry", function(e) {_this.addTry();});
+                _this.setKey("addWhile", function(e) {_this.addWhile();});
             }
         },
 

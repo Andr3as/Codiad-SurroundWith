@@ -5,7 +5,6 @@ This is a plugin for the cloud IDE Codiad. It adds a 'surround with' ability to 
 #Installation
 
 - Download the zip file and unzip it to your plugin folder.
-- Enable this plugin in the plugin manager.
 
 #Basic Use
 
