@@ -1,7 +1,8 @@
 /*
 * Copyright (c) Codiad & Andr3as, distributed
 * as-is and without warranty under the MIT License. 
-* See [root]/license.md for more information. This information must remain intact.
+* See http://opensource.org/licenses/MIT for more information. 
+* This information must remain intact.
 */
 
 (function(global, $){
@@ -131,26 +132,61 @@
         //
         //////////////////////////////////////////////////////////
         addStuff: function(type) {
-            var _this   = this;
+            var _this       = this;
             this.getSettings();
-            var selText = codiad.editor.getSelectedText();
-            // multi selection
-            // ?Todo - rewrite - allow multiselection
+            var selection   = "";
             if (codiad.editor.getActive().inMultiSelectMode) {
-                codiad.message.error("Multiselection is not supported!");
-                return false;
+                var multiRanges = codiad.editor.getActive().multiSelect.getAllRanges();
+                var session     = codiad.editor.getActive().getSession();
+                for (var i = 0; i < multiRanges.length; i++) {
+                    selection = session.getTextRange(multiRanges[i]);
+                    selection = this.insertType(selection, type, multiRanges[i]);
+                    if (selection === false) {
+                        return false;
+                    }
+                    session.replace(multiRanges[i], selection);
+                }
+            } else {
+                selection   = codiad.editor.getSelectedText();
+                var range   = codiad.editor.getActive().getSelectionRange();
+                selection   = this.insertType(selection, type, range);
+                if (selection === false) {
+                    return false;
+                }
+                codiad.editor.getActive().insert(selection);
             }
-            
+            var msg = type.substr(0,1).toUpperCase() + type.substr(1,type.length);
+            codiad.message.success(msg+" added");
+            return true;
+        },
+        
+        
+        //////////////////////////////////////////////////////////
+        //
+        //  Surround selection with specific key word
+        //
+        //  Parameters:
+        //
+        //  sel - {String} - Selected text
+        //  type - {String} (Keyword for the surrounding content)
+        //  range - {Object} - Current selection range
+        //
+        //  Returns:
+        //
+        //  {boolean|string} Either false on failure or string with inserted type
+        //
+        //////////////////////////////////////////////////////////
+        insertType: function(sel, type, range) {
             var syntax  = $('#current-mode').text();
             var parts   = null;
-            for (var tag in _this.tagArray) {
+            for (var tag in this.tagArray) {
                 if (tag === syntax) {
-                    parts = _this.tagArray[tag];
+                    parts = this.tagArray[tag];
                 }
             }
             if (parts === null) {
                 // syntax not defined, select default
-                parts = _this.tagArray["default"];
+                parts = this.tagArray["default"];
             }
             
             // catch wrong key word
@@ -164,33 +200,30 @@
             
             var inText  = "";
             //Insert tabs
-            if (selText.search("\r\n") != -1) {
+            if (sel.search("\r\n") != -1) {
                 //Windows
-                inText = this.insertLineTab(selText, "\r\n", pre, post);
-            } else if (selText.search("\r") != -1) {
+                inText = this.insertLineTab(sel, "\r\n", pre, post, range);
+            } else if (sel.search("\r") != -1) {
                 //Mac
-                inText = this.insertLineTab(selText, "\r", pre, post);
+                inText = this.insertLineTab(sel, "\r", pre, post, range);
             } else {
                 //Unix
-                inText = this.insertLineTab(selText, "\n", pre, post);
+                inText = this.insertLineTab(sel, "\n", pre, post, range);
             }
             //create space
             var space = "";
-            for (var i = 0; i < _this.tabWidth; i++) {
+            for (var i = 0; i < this.tabWidth; i++) {
                 space += " ";
             }
             // Workaround to fix mixed tabs and spaces
             //and to replace "\t" with spaces if necessary
-            if (_this.indentType == "tab") {
+            if (this.indentType == "tab") {
                 inText  = inText.replace(new RegExp(space, "g"), "\t");
             } else {
                 inText  = inText.replace(new RegExp("\t", "g"), space);
             }
             //insert Text
-            codiad.editor.getActive().insert(inText);
-            var msg = type.substr(0,1).toUpperCase() + type.substr(1,type.length);
-            codiad.message.success(msg+" added");
-            return true;
+            return inText;
         },
         
         //////////////////////////////////////////////////////////
@@ -203,9 +236,10 @@
         //  type - {String} - Line ending {\n,\r,\r\n}
         //  pre - {String} - String to add before selection
         //  post - {String} - String to add after selection
+        //  range - {Object} - Current selection range
         //
         //////////////////////////////////////////////////////////
-        insertLineTab: function(sel, type, pre, post) {
+        insertLineTab: function(sel, type, pre, post, range) {
             var indent = "";
             var inText = "";
             if (this.indentType == "tab") {
@@ -216,7 +250,7 @@
                 }
             }
             
-            var selStart= codiad.editor.getActive().getSelectionRange().start;
+            var selStart= range.start;
             var tab = this.getStartTab(selStart);
             
             inText = pre + type + tab + sel;
